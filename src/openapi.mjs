@@ -3,7 +3,7 @@ import { VERSION } from './index.mjs';
 const strictObject = (properties, required = Object.keys(properties)) => ({type:'object',additionalProperties:false,properties,required});
 const positive = {type:'number',exclusiveMinimum:0};
 const request = strictObject({
-  marketplace:{type:'string',pattern:'^[A-Z]{2}$',description:'AU, US, CA, MX, UK (GB alias), DE, FR, IT, ES, NL, SE, PL, BE, IE'},
+  marketplace:{type:'string',pattern:'^[A-Z]{2}$',description:'AU, US, CA, MX, UK (GB alias), DE, FR, IT, ES, NL, SE, PL, BE, IE, AE, SA, JP'},
   price:strictObject({amount:{...positive,maximum:100000000,multipleOf:.01},currency:{type:'string',pattern:'^[A-Z]{3}$'}}),
   package:strictObject({
     dimensions:strictObject({length:{...positive,maximum:10000},width:{...positive,maximum:10000},height:{...positive,maximum:10000},unit:{enum:['cm','in']}}),
@@ -30,13 +30,15 @@ const result = {
 const json = schema => ({'application/json':{schema}});
 const errors = Object.fromEntries([400,401,413,415,422,500].map(code=>[code,{description:'Structured error',content:json({$ref:'#/components/schemas/Error'})}]));
 
+request.allOf = [{if:{properties:{marketplace:{const:'JP'}},required:['marketplace']},then:{properties:{price:{properties:{amount:{type:'integer',description:'JPY prices must be whole yen.'}}}}}}];
+
 export const openapi = {
   openapi:'3.1.0',info:{title:'Samforo FBA Fee Calculator',version:VERSION,description:'Versioned domestic FBA fee estimates for custom packages. No ASIN required. Independent of Feishu and SKU costs.'},
   servers:[{url:'http://127.0.0.1:4318'}],
   paths:{
     '/healthz':{get:{operationId:'health',security:[],responses:{200:{description:'Service and rate version',content:json({type:'object'})}}}},
     '/readyz':{get:{operationId:'readiness',security:[],responses:{200:{description:'All marketplace adapters ready',content:json({type:'object'})},503:{description:'Not ready or draining',content:json({type:'object'})}}}},
-    '/v1/fba/marketplaces':{get:{operationId:'getMarketplaces',responses:{200:{description:'14 marketplaces with published limits, sources and assumptions',content:json({type:'object'})},...errors}}},
+    '/v1/fba/marketplaces':{get:{operationId:'getMarketplaces',responses:{200:{description:'17 marketplaces with published limits, sources and assumptions',content:json({type:'object'})},...errors}}},
     '/v1/fba/calculate':{post:{operationId:'calculateFbaFee',requestBody:{required:true,content:json({$ref:'#/components/schemas/CalculationRequest'})},responses:{200:{description:'Estimate or explicit quote_required with null fee',content:json({$ref:'#/components/schemas/CalculationResult'})},...errors}}},
     '/v1/fba/calculate-batch':{post:{operationId:'calculateBatch',requestBody:{required:true,content:json(strictObject({items:{type:'array',minItems:1,maxItems:100,items:{$ref:'#/components/schemas/CalculationRequest'}}}))},responses:{200:{description:'Ordered, independently validated results',content:json({type:'object',required:['results'],properties:{results:{type:'array',items:{oneOf:[strictObject({index:{type:'integer'},ok:{const:true},result:{$ref:'#/components/schemas/CalculationResult'}}),strictObject({index:{type:'integer'},ok:{const:false},error:{$ref:'#/components/schemas/ErrorDetail'}})]}}}})},...errors}}},
     '/openapi.json':{get:{operationId:'getOpenApi',responses:{200:{description:'This OpenAPI 3.1 document',content:json({type:'object'})}}}},

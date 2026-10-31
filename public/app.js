@@ -14,7 +14,7 @@ import {
   noticeText,
   resultText,
   comparisonCsv,
-} from "./model.mjs?v=0.2.1";
+} from "./model.mjs?v=0.3.0";
 
 const $ = (id) => document.getElementById(id);
 let mode = "single",
@@ -204,9 +204,9 @@ function initializeMarkets(available) {
     const price = document.createElement("input");
     price.type = "number";
     price.id = `price-${code}`;
-    price.min = ".01";
+    price.min = currency === "JPY" ? "1" : ".01";
     price.max = "100000000";
-    price.step = ".01";
+    price.step = currency === "JPY" ? "1" : ".01";
     price.required = true;
     price.inputMode = "decimal";
     price.placeholder = "售价";
@@ -290,11 +290,11 @@ function renderSingle(result) {
     `${MARKET_NAMES[result.marketplace]} ${result.marketplace}`,
   );
   text("result-currency", currency);
-  text("result-total", fee.total.toFixed(2));
+  text("result-total", fee.total.toFixed(currency === "JPY" ? 0 : 2));
   text(
     "result-tax",
     fee.includesTax
-      ? "费用已含 IVA；未另加税费"
+      ? (currency === "JPY" ? "费用已含 10% 消费税；未重复加税" : "费用已含 IVA；未另加税费")
       : "配送费未额外包含 VAT / GST 等税费",
   );
   text(
@@ -319,7 +319,7 @@ function renderSingle(result) {
   text("result-unit-weight", formatWeight(result.package.unitWeightG, "g"));
   text(
     "result-dimensional-weight",
-    formatWeight(classification.dimensionalWeight, classification.weightUnit),
+    ["AE","SA","JP"].includes(result.marketplace) ? "不参与本站费用计重" : formatWeight(classification.dimensionalWeight, classification.weightUnit),
   );
   text("result-date", `售出日期 ${result.saleDate}`);
   text("result-verified-date", `核验 ${result.rateCard.verifiedAt}`);
@@ -374,11 +374,11 @@ function renderComparison(items, results) {
     currency.textContent = item.request.price.currency;
     name.append(currency);
     const price = document.createElement("td");
-    price.textContent = item.request.price.amount.toFixed(2);
+    price.textContent = item.request.price.amount.toFixed(item.request.price.currency === "JPY" ? 0 : 2);
     const fee = document.createElement("td");
     fee.textContent =
       item.result?.status === "estimated"
-        ? item.result.fee.total.toFixed(2)
+        ? item.result.fee.total.toFixed(item.result.currency === "JPY" ? 0 : 2)
         : item.error
           ? "参数有误"
           : "需报价";
@@ -535,6 +535,8 @@ $("marketplace").addEventListener("change", () => {
   invalidate();
   $("price").value = "";
   text("currency-label", CURRENCIES[$("marketplace").value]);
+  $("price").step = $("marketplace").value === "JP" ? "1" : ".01";
+  $("price").min = $("marketplace").value === "JP" ? "1" : ".01";
   show("example-note", false);
   relevantOptions();
 });

@@ -33,6 +33,8 @@ export function validateRequest(input) {
     throw new InputError('Expected a three-letter uppercase currency code', 'price.currency');
   if (Math.abs(input.price.amount * 100 - Math.round(input.price.amount * 100)) > 0.00001)
     throw new InputError('Price must have at most two decimal places', 'price.amount');
+  if (input.marketplace === 'JP' && !Number.isInteger(input.price.amount))
+    throw new InputError('Japan prices must be whole JPY amounts', 'price.amount');
   object(input.package, ['dimensions', 'weight'], 'package');
   object(input.package.dimensions, ['length', 'width', 'height', 'unit'], 'package.dimensions');
   for (const key of ['length', 'width', 'height']) positive(input.package.dimensions[key], `package.dimensions.${key}`, 10_000);

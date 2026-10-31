@@ -17,17 +17,17 @@ test('HTTP single and batch endpoints preserve library results',async t=>{
   const {url}=await withServer(t);
   const single=await post(url,'/v1/fba/calculate',request);
   assert.equal(single.status,200);assert.deepEqual(await single.json(),calculateFbaFee(request));
-  const batch=await post(url,'/v1/fba/calculate-batch',{items:[request,{}, {...request,marketplace:'JP'}]});
+  const batch=await post(url,'/v1/fba/calculate-batch',{items:[request,{}, {...request,marketplace:'BR'}]});
   const json=await batch.json();
   assert.equal(batch.status,200);assert.deepEqual(json.results.map(x=>x.ok),[true,false,true]);
   assert.equal(json.results[2].result.status,'quote_required');
   assert.equal(json.results[2].result.fee,null);
 });
 
-test('health, 14-market metadata and OpenAPI contract are served',async t=>{
+test('health, 17-market metadata and OpenAPI contract are served',async t=>{
   const {url}=await withServer(t);
-  const health=await (await fetch(url+'/healthz')).json();assert.equal(health.marketplaces,14);
-  const meta=await (await fetch(url+'/v1/fba/marketplaces')).json();assert.equal(meta.marketplaces.length,14);
+  const health=await (await fetch(url+'/healthz')).json();assert.equal(health.marketplaces,17);
+  const meta=await (await fetch(url+'/v1/fba/marketplaces')).json();assert.equal(meta.marketplaces.length,17);
   const spec=await (await fetch(url+'/openapi.json')).json();assert.equal(spec.openapi,'3.1.0');
   for(const path of ['/healthz','/v1/fba/marketplaces','/v1/fba/calculate','/v1/fba/calculate-batch','/openapi.json']) assert.ok(spec.paths[path]);
   function checkRefs(value) {

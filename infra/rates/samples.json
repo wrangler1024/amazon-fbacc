@@ -547,6 +547,380 @@
         "description": "Independent 0.6 kg peak calculation with CAD 14 low-price threshold and subsequent 3.5 percent fuel surcharge."
       },
       "boundary": true
+    },
+    {
+      "id": "AE-official-example-1",
+      "request": {
+        "marketplace": "AE",
+        "price": {
+          "amount": 1050,
+          "currency": "AED"
+        },
+        "package": {
+          "dimensions": {
+            "length": 35.1,
+            "width": 22.9,
+            "height": 1.8,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 81,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 920
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.ae/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "AE-official-example-2",
+      "request": {
+        "marketplace": "AE",
+        "price": {
+          "amount": 24,
+          "currency": "AED"
+        },
+        "package": {
+          "dimensions": {
+            "length": 32,
+            "width": 16.9,
+            "height": 14,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 1608,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 950
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.ae/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "AE-official-example-3",
+      "request": {
+        "marketplace": "AE",
+        "price": {
+          "amount": 24,
+          "currency": "AED"
+        },
+        "package": {
+          "dimensions": {
+            "length": 61,
+            "width": 19.1,
+            "height": 15.2,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 3555,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 1350
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.ae/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "AE-official-example-4",
+      "request": {
+        "marketplace": "AE",
+        "price": {
+          "amount": 1050,
+          "currency": "AED"
+        },
+        "package": {
+          "dimensions": {
+            "length": 137,
+            "width": 89,
+            "height": 8.9,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 18597,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 3150
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.ae/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "SA-official-example-5",
+      "request": {
+        "marketplace": "SA",
+        "price": {
+          "amount": 15,
+          "currency": "SAR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 35.1,
+            "width": 22.9,
+            "height": 1.8,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 81,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 720
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.sa/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "SA-official-example-6",
+      "request": {
+        "marketplace": "SA",
+        "price": {
+          "amount": 45,
+          "currency": "SAR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 32,
+            "width": 16.9,
+            "height": 14,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 1608,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 1200
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.sa/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "SA-official-example-7",
+      "request": {
+        "marketplace": "SA",
+        "price": {
+          "amount": 22,
+          "currency": "SAR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 61,
+            "width": 19.1,
+            "height": 15.2,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 3555,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 1300
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.sa/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "SA-official-example-8",
+      "request": {
+        "marketplace": "SA",
+        "price": {
+          "amount": 120,
+          "currency": "SAR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 137,
+            "width": 89,
+            "height": 8.9,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 18597,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 3300
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.sa/help/hub/reference/external/201112670",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "JP-official-example-9",
+      "request": {
+        "marketplace": "JP",
+        "price": {
+          "amount": 900,
+          "currency": "JPY"
+        },
+        "package": {
+          "dimensions": {
+            "length": 15,
+            "width": 9,
+            "height": 5,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 500,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 358
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.co.jp/help/hub/reference/external/GRH54FUTD3C5LWWW",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "JP-official-example-10",
+      "request": {
+        "marketplace": "JP",
+        "price": {
+          "amount": 1150,
+          "currency": "JPY"
+        },
+        "package": {
+          "dimensions": {
+            "length": 30,
+            "width": 14,
+            "height": 5,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 620,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 425
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.co.jp/help/hub/reference/external/GRH54FUTD3C5LWWW",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
+    },
+    {
+      "id": "JP-official-example-11",
+      "request": {
+        "marketplace": "JP",
+        "price": {
+          "amount": 8000,
+          "currency": "JPY"
+        },
+        "package": {
+          "dimensions": {
+            "length": 25,
+            "width": 20,
+            "height": 10,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 325,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 430
+      },
+      "reference": {
+        "kind": "official_worked_example",
+        "url": "https://sellercentral.amazon.co.jp/help/hub/reference/external/GRH54FUTD3C5LWWW",
+        "description": "Independent published non-frozen/ordinary-goods worked example checked 2026-10-31."
+      },
+      "boundary": false
     }
   ]
 }

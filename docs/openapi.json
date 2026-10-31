@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Samforo FBA Fee Calculator",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "description": "Versioned domestic FBA fee estimates for custom packages. No ASIN required. Independent of Feishu and SKU costs."
   },
   "servers": [
@@ -62,7 +62,7 @@
         "operationId": "getMarketplaces",
         "responses": {
           "200": {
-            "description": "14 marketplaces with published limits, sources and assumptions",
+            "description": "17 marketplaces with published limits, sources and assumptions",
             "content": {
               "application/json": {
                 "schema": {
@@ -401,7 +401,7 @@
           "marketplace": {
             "type": "string",
             "pattern": "^[A-Z]{2}$",
-            "description": "AU, US, CA, MX, UK (GB alias), DE, FR, IT, ES, NL, SE, PL, BE, IE"
+            "description": "AU, US, CA, MX, UK (GB alias), DE, FR, IT, ES, NL, SE, PL, BE, IE, AE, SA, JP"
           },
           "price": {
             "type": "object",
@@ -540,6 +540,32 @@
           "package",
           "saleDate",
           "category"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "marketplace": {
+                  "const": "JP"
+                }
+              },
+              "required": [
+                "marketplace"
+              ]
+            },
+            "then": {
+              "properties": {
+                "price": {
+                  "properties": {
+                    "amount": {
+                      "type": "integer",
+                      "description": "JPY prices must be whole yen."
+                    }
+                  }
+                }
+              }
+            }
+          }
         ]
       },
       "CalculationResult": {

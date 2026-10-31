@@ -25,9 +25,9 @@ import urllib.error
 from html.parser import HTMLParser
 
 HERE = Path(__file__).resolve().parent
-RATE_PATH = Path('rates/2026-10-31.json')
+RATE_PATH = Path('rates/2026-10-31.2.json')
 MAX_BYTES = 16 * 1024 * 1024
-MARKETS = {'AU','US','CA','MX','UK','DE','FR','IT','ES','NL','SE','PL','BE','IE'}
+MARKETS = {'AU','US','CA','MX','UK','DE','FR','IT','ES','NL','SE','PL','BE','IE','AE','SA','JP'}
 
 
 def now():
@@ -60,7 +60,7 @@ def official_url(url):
     p = urllib.parse.urlsplit(url)
     allowed = {'sellercentral.amazon.com','sellercentral.amazon.ca','sellercentral.amazon.com.au',
                'sellercentral.amazon.com.mx','sellercentral.amazon.co.uk','sell.amazon.co.uk',
-               'sell.amazon.ca','m.media-amazon.com'}
+               'sell.amazon.ca','m.media-amazon.com','sellercentral.amazon.ae','sellercentral.amazon.sa','sellercentral.amazon.co.jp','sell.amazon.ae','sell.amazon.sa','sell.amazon.co.jp'}
     if p.scheme != 'https' or p.hostname not in allowed or p.username or p.password or p.port not in (None,443):
         raise ValueError('Only configured public Amazon HTTPS hosts are allowed')
     return url
@@ -411,7 +411,7 @@ def verify(args):
         raise ValueError('Source evidence changed after capture')
     before,after = read_json(active/RATE_PATH),read_json(workspace/RATE_PATH)
     if set(after['markets'])!=MARKETS:
-        raise ValueError('Candidate must retain all 14 marketplaces')
+        raise ValueError('Candidate must retain all 17 marketplaces')
     differences = json_diff(before,after)
     changed_markets = sorted(m for m in MARKETS if before['markets'][m]!=after['markets'][m])
     if differences and (after['version']==before['version'] or not changed_markets):

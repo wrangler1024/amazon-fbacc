@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — 2026-10-31
+
+- Add AE/AED, SA/SAR and JP/JPY, expanding coverage to17 markets.
+- Support Japanese side/sum/weight tiers and whole-yen currency units; display included consumption tax.
+- Use reviewed Middle East unit-weight fee bands; return quote_required for undefined/conflicting conditions.
+- Preserve all original14 rate definitions in snapshot2026-10-31.2.
+- Expand monitoring infra to0.2.0, with22 sources and27 independent samples; scheduling remains opt-in.
+
+
 ## 0.2.1 — 2026-10-31
 
 - Hide irrelevant low-price controls on US/CA/MX; limit AU to automatic/no-discount choices.

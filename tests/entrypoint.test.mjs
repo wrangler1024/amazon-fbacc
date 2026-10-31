@@ -24,7 +24,7 @@ test('CLI starts through an atomic-release symlink and shuts down cleanly',async
       child.stdout.on('data',data=>{if(data.toString().includes('listening on'))resolve();});
     });
     const result=await fetch(`http://127.0.0.1:${port}/readyz`);assert.equal(result.status,200);
-    assert.equal((await result.json()).marketplaces,14);
+    assert.equal((await result.json()).marketplaces,17);
   }finally{
     clearTimeout(timer);if(child.exitCode==null)child.kill('SIGTERM');await closed;
     await rm(directory,{recursive:true,force:true});

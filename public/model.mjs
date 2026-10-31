@@ -13,6 +13,9 @@ export const MARKETS = [
   ["BE", "比利时", "EUR"],
   ["IE", "爱尔兰", "EUR"],
   ["AU", "澳大利亚", "AUD"],
+  ["AE", "阿联酋", "AED"],
+  ["SA", "沙特", "SAR"],
+  ["JP", "日本", "JPY"],
 ];
 export const MARKET_NAMES = Object.fromEntries(
   MARKETS.map(([code, name]) => [code, name]),
@@ -35,6 +38,9 @@ export const EXAMPLE_PRICES = {
   BE: 25,
   IE: 25,
   AU: 25,
+  AE: 20,
+  SA: 30,
+  JP: 1500,
 };
 const FACTORS = {
   cm: 1,
@@ -113,7 +119,7 @@ export function makeRequest(values, marketplace, price) {
   };
 }
 export function formatMoney(amount, currency) {
-  return `${currency} ${Number(amount).toFixed(2)}`;
+  return `${currency} ${Number(amount).toFixed(currency === "JPY" ? 0 : 2)}`;
 }
 export function formatWeight(value, unit) {
   return `${new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 4 }).format(value)} ${unit}`;
@@ -148,15 +154,24 @@ const TIERS = {
   "extra-large-50-70": "特大件 50–70 lb",
   "extra-large-70-150": "特大件 70–150 lb",
 };
-export const tierLabel = (id) => TIERS[id] ?? id;
+export function tierLabel(id) {
+  if (TIERS[id]) return TIERS[id];
+  if (id === 'jp-small') return '日本小型';
+  if (id === 'jp-standard-thin') return '日本标准薄件';
+  const match = /^jp-(standard|oversize|supersize)-(\d+)$/.exec(id);
+  if (!match) return id;
+  const kind = {standard:'标准',oversize:'大型',supersize:'特大型'}[match[1]];
+  return `日本${kind} · 三边合计≤${match[2]} cm`;
+}
 export const planLabel = (plan) =>
   ({ regular: "常规费率", peak: "旺季费率", low_price: "低价费率" })[plan] ??
   plan;
 export function quoteMessage(code) {
   return (
     {
+      PRICE_BOUNDARY_UNCONFIRMED: "沙特官方费用列未明确售价恰好 SAR 25 的归属，请取得官方报价。",
       OFFICIAL_SOURCE_CONFLICT:
-        "该尺寸档的官方续重单价存在不一致。请使用亚马逊收入计算器或官方报价核实。",
+        "该条件下的官方费用来源存在不一致。请使用亚马逊收入计算器或官方报价核实。",
       PACKAGE_OUT_OF_SCOPE:
         "当前包装超出本工具已支持的尺寸或重量范围，请取得亚马逊官方报价。",
       UNSUPPORTED_MARKETPLACE: "当前站点尚未纳入已核验的费率范围。",
@@ -176,6 +191,8 @@ export function noticeText(notice, market) {
     "12 EUR";
   return (
     {
+      ME_UNIT_WEIGHT: "本站按包装实重选择费用档，不按体积重收费；费用未含 VAT。超大件仍须确认入仓资格。",
+      JP_ORDINARY_NON_FROZEN: "日本按包装实重和尺寸条件计价，费用已含 10% 消费税。仅支持普通非冷冻商品；特大型还须满足入仓及服务限制。",
       CONSERVATIVE_LOW_PRICE: `未确认官方费用类目，低价优惠按 ${cap} 的保守门槛判断。`,
       FUTURE_DATE:
         "当前为未来日期测算，使用核验日已公布的规则；实际售出前请复核费率更新。",

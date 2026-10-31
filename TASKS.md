@@ -7,3 +7,5 @@
 - [ ] Extend independently reviewed reference cases for changed rate tiers.
 - [x] Improve marketplace-specific low-price eligibility UI guidance and isolate per-market comparison choices.
 - [ ] Maintain source adapters when official content or layouts change.
+
+- [x] Extend calculator, web UI, source monitoring and reference samples to AE/SA/JP (17 markets).

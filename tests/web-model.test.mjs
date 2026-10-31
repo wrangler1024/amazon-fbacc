@@ -43,7 +43,7 @@ test("unit switches preserve the physical package at exact AU gram/fee boundarie
 });
 
 test("each marketplace uses its own currency and price; CEP is sent only for DE", () => {
-  assert.equal(MARKETS.length, 14);
+  assert.equal(MARKETS.length, 17);
   for (const [code] of MARKETS) {
     const req = makeRequest(
       { ...values, cep: true },
@@ -77,7 +77,7 @@ test("eligibility UI exposes only supported choices and uses the API's price thr
   for(const metadata of getMarketplaces()) {
     const code=metadata.marketplace;
     const view=lowPricePresentation(code,metadata);
-    if(['US','CA','MX'].includes(code)) {
+    if(['US','CA','MX','AE','SA','JP'].includes(code)) {
       assert.equal(view,null);
       assert.deepEqual(lowPriceChoices(code),[]);
     } else {

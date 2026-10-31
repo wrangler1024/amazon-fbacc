@@ -271,6 +271,206 @@
         "FBA",
         "fulfil"
       ]
+    },
+    {
+      "id": "ae-fees",
+      "url": "https://sellercentral.amazon.ae/help/hub/reference/external/201112670",
+      "markets": [
+        "AE"
+      ],
+      "title": "FBA fulfilment fees",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "FBA",
+        "weight"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.ae/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "201112670",
+        "locale": "en_AE",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "ae-tiers",
+      "url": "https://sellercentral.amazon.ae/help/hub/reference/external/201105770",
+      "markets": [
+        "AE"
+      ],
+      "title": "Product size tiers",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "FBA",
+        "weight"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.ae/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "201105770",
+        "locale": "en_AE",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "ae-pricing",
+      "url": "https://sell.amazon.ae/pricing",
+      "markets": [
+        "AE"
+      ],
+      "title": "Official public pricing cross-check",
+      "kind": "html",
+      "minChars": 3000,
+      "requiredPatterns": [
+        "FBA|الشحن",
+        "25"
+      ]
+    },
+    {
+      "id": "sa-fees",
+      "url": "https://sellercentral.amazon.sa/help/hub/reference/external/201112670",
+      "markets": [
+        "SA"
+      ],
+      "title": "FBA fulfilment fees",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "FBA",
+        "weight"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.sa/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "201112670",
+        "locale": "en_SA",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "sa-tiers",
+      "url": "https://sellercentral.amazon.sa/help/hub/reference/external/201105770",
+      "markets": [
+        "SA"
+      ],
+      "title": "Product size tiers",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "FBA",
+        "weight"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.sa/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "201105770",
+        "locale": "en_SA",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "sa-pricing",
+      "url": "https://sell.amazon.sa/pricing",
+      "markets": [
+        "SA"
+      ],
+      "title": "Official public pricing cross-check",
+      "kind": "html",
+      "minChars": 3000,
+      "requiredPatterns": [
+        "FBA|الشحن",
+        "25"
+      ]
+    },
+    {
+      "id": "jp-fees",
+      "url": "https://sellercentral.amazon.co.jp/help/hub/reference/external/201112670",
+      "markets": [
+        "JP"
+      ],
+      "title": "FBA fulfilment fees",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "円"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.co.jp/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "201112670",
+        "locale": "ja_JP",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "jp-tiers",
+      "url": "https://sellercentral.amazon.co.jp/help/hub/reference/external/G201105770",
+      "markets": [
+        "JP"
+      ],
+      "title": "Product size tiers",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "サイズ"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.co.jp/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "G201105770",
+        "locale": "ja_JP",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "jp-2026",
+      "url": "https://sellercentral.amazon.co.jp/help/hub/reference/external/GRH54FUTD3C5LWWW",
+      "markets": [
+        "JP"
+      ],
+      "title": "April 2026 fee changes",
+      "kind": "help_json",
+      "minChars": 600,
+      "minTables": 1,
+      "requiredPatterns": [
+        "円"
+      ],
+      "fetchUrl": "https://sellercentral.amazon.co.jp/help/hub/mons-api/GetHelpTopic",
+      "requestBody": {
+        "guid": "GRH54FUTD3C5LWWW",
+        "locale": "ja_JP",
+        "statuses": [
+          "Live"
+        ]
+      }
+    },
+    {
+      "id": "jp-pricing",
+      "url": "https://sell.amazon.co.jp/pricing",
+      "markets": [
+        "JP"
+      ],
+      "title": "Official public pricing cross-check",
+      "kind": "html",
+      "minChars": 3000,
+      "requiredPatterns": [
+        "FBA",
+        "1,000|1000"
+      ]
     }
   ],
   "verifyCandidates": true

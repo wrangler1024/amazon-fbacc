@@ -152,7 +152,7 @@ test('metric/imperial inputs produce identical prices and input objects are not 
 });
 
 test('unknown sites, categories, delivery programs and historical dates return quote_required',()=>{
-  for(const req of [{...input(),marketplace:'JP'}, {...input(),category:'dangerous_goods'}, {...input(),category:'unknown'}, {...input(),program:'efn'},input('MX',25,[20,15,1],50,'2026-07-05')]) {
+  for(const req of [{...input(),marketplace:'BR'}, {...input(),category:'dangerous_goods'}, {...input(),category:'unknown'}, {...input(),program:'efn'},input('MX',25,[20,15,1],50,'2026-07-05')]) {
     const r=calculate(req);assert.equal(r.status,'quote_required');assert.equal(r.fee,null);
   }
   total({...input('UK'),marketplace:'GB'},1.92);

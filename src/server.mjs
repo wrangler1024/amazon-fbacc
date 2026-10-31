@@ -74,11 +74,11 @@ export function createServer({
   }
   const catalog = getMarketplaces();
   const ready =
-    catalog.length === 14 &&
+    catalog.length === 17 &&
     catalog.every((m) => {
       const probe = calculateFbaFee({
         marketplace: m.marketplace,
-        price: { amount: 25, currency: m.currency },
+        price: { amount: 30, currency: m.currency },
         package: {
           dimensions: { length: 20, width: 15, height: 1, unit: "cm" },
           weight: { value: 50, unit: "g" },

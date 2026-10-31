@@ -1,9 +1,9 @@
 {
   "name": "@samforo/fba-fee-calculator",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
-  "description": "Independent Amazon domestic FBA package fee calculator for 14 marketplaces",
+  "description": "Independent Amazon domestic FBA package fee calculator for 17 marketplaces",
   "engines": {
     "node": ">=22.14.0"
   },

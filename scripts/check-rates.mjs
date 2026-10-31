@@ -1,17 +1,18 @@
 import assert from 'node:assert/strict';
-import book from '../rates/2026-10-31.json' with {type:'json'};
+import book from '../rates/2026-10-31.2.json' with {type:'json'};
 
-const expected = ['AU','US','CA','MX','UK','DE','FR','IT','ES','NL','SE','PL','BE','IE'];
+const expected = ['AU','US','CA','MX','UK','DE','FR','IT','ES','NL','SE','PL','BE','IE','AE','SA','JP'];
 assert.deepEqual(Object.keys(book.markets).sort(),expected.sort());
 let tables = 0, bands = 0;
 for (const [code,m] of Object.entries(book.markets)) {
+  assert.ok([0,2].includes(m.currencyExponent ?? 2),code);
   assert.ok(m.version && m.effectiveFrom && m.verifiedAt,code);
-  assert.ok(['AUD','USD','CAD','MXN','GBP','EUR','SEK','PLN'].includes(m.currency),code);
+  assert.ok(['AUD','USD','CAD','MXN','GBP','EUR','SEK','PLN','AED','SAR','JPY'].includes(m.currency),code);
   assert.ok(Number.isFinite(m.dimensionalDivisor) && m.dimensionalDivisor > 0,code);
   for (const s of m.sources) {
     const url = new URL(s.url);
     assert.equal(url.protocol,'https:');
-    assert.match(url.hostname,/(?:^|\.)(?:amazon\.(?:com(?:\.au|\.mx)?|ca|co\.uk)|media-amazon\.com)$/);
+    assert.match(url.hostname,/(?:^|\.)(?:amazon\.(?:com(?:\.au|\.mx)?|ca|co\.uk|ae|sa|co\.jp)|media-amazon\.com)$/);
   }
   assert.equal(new Set(m.tiers.map(t=>t.id)).size,m.tiers.length,code);
   for (const t of m.tiers) {

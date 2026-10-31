@@ -1,8 +1,8 @@
-import book from '../rates/2026-10-31.json' with { type: 'json' };
+import book from '../rates/2026-10-31.2.json' with { type: 'json' };
 import { InputError, validateRequest } from './validation.mjs';
 
 export { InputError };
-export const VERSION = '0.2.1';
+export const VERSION = '0.3.0';
 export const RATE_VERSION = book.version;
 const EPSILON = 1e-9;
 const within = (value, maximum) => maximum == null || value <= maximum + EPSILON;
@@ -28,6 +28,7 @@ function classify(tier, pkg, market, lowPrice = false) {
     within(pkg.unitWeight, tier.maxUnitWeight) &&
     (lowPrice || within(dimensionalWeight, tier.maxDimensionalWeight)) &&
     within(shippingWeight, tier.maxShippingWeight) &&
+    within(pkg.dimensions.reduce((a,b) => a+b, 0), tier.maxDimensionSum) &&
     within(lengthPlusGirth, tier.maxLengthPlusGirth) && within(pkg.dimensions[0], tier.maxLongestSide);
   const exclusive = tier.exclusiveMaximums &&
     (pkg.unitWeight >= tier.maxUnitWeight - EPSILON || dimensionalWeight >= tier.maxDimensionalWeight - EPSILON);
@@ -79,11 +80,11 @@ function selectRate(request, market, pkg, isPeak) {
 
 export function getMarketplaces() {
   return Object.entries(book.markets).map(([marketplace, market]) => ({
-    marketplace, currency: market.currency, version: market.version,
+    marketplace, currency: market.currency, currencyExponent: market.currencyExponent ?? 2, version: market.version,
     verifiedAt: market.verifiedAt, effectiveFrom: market.effectiveFrom,
     program: 'domestic', category: 'general', feeIncludesTax: market.feeIncludesTax,
     tiers: market.tiers.map(t => ({ id: t.id, maxDimensions: t.maxDimensions ? [...t.maxDimensions] : null,
-      dimensionUnit: market.dimensionUnit, maxUnitWeight: t.maxUnitWeight,
+      dimensionUnit: market.dimensionUnit, maxUnitWeight: t.maxUnitWeight, maxDimensionSum: t.maxDimensionSum ?? null, maxLongestSide: t.maxLongestSide ?? null,
       maxShippingWeight: t.maxShippingWeight, maxDimensionalWeight: t.maxDimensionalWeight,
       weightUnit: market.weightUnit, requiresQuote: t.requiresQuote ?? null })),
     lowPrice: structuredClone(market.lowPrice ?? market.lowPriceDiscount ?? null),
@@ -122,16 +123,22 @@ export function calculateFbaFee(input) {
   if (request.marketplace === 'IE') warnings.push({code:'IE_PROMOTIONAL_RATES',message:market.notes[0]});
   if (request.marketplace === 'AU' && (request.weightG > 23000 || request.dimensionsCm.some((n,i)=>n > [116,116,102][i])))
     warnings.push({code:'AU_INBOUND_ELIGIBILITY',message:'This package exceeds ordinary AU inbound limits; Amazon eligibility/approval must be checked independently of this fee estimate.'});
+  if (market.ambiguousPrices?.includes(request.price.amount))
+    return quote('PRICE_BOUNDARY_UNCONFIRMED', 'Official Saudi fee columns specify below/above SAR 25 without defining exactly SAR 25. Obtain an official quote.');
   const pkg = nativePackage(request, market);
   const isPeak = !!market.peak && request.saleDate >= market.peak.from && request.saleDate < market.peak.until;
   const selected = selectRate(request, market, pkg, isPeak);
   if (!selected) return quote('PACKAGE_OUT_OF_SCOPE', 'No reviewed domestic size/weight tier covers this package.');
   if (selected.tier.requiresQuote && (selected.tier.quoteAboveWeight == null ||
-      selected.classification.shippingWeight > selected.tier.quoteAboveWeight + EPSILON))
+      selected.classification.shippingWeight > selected.tier.quoteAboveWeight + EPSILON) &&
+      (selected.tier.quoteAbovePrice == null || request.price.amount > selected.tier.quoteAbovePrice))
     return quote('OFFICIAL_SOURCE_CONFLICT', selected.tier.requiresQuote);
   const guard = market.quoteRules?.find(rule => request.saleDate >= rule.from &&
     request.price.amount >= rule.minimumPrice && selected.classification.shippingWeight > rule.aboveWeight + EPSILON);
   if (guard) return quote('RATE_REVIEW_REQUIRED', guard.message);
+  if (['AE','SA'].includes(request.marketplace)) warnings.push({code:'ME_UNIT_WEIGHT',message:'Fee bands use packaged unit weight; fees exclude VAT. Oversize eligibility requires separate verification.'});
+  if (request.marketplace === 'JP') warnings.push({code:'JP_ORDINARY_NON_FROZEN',message:'Non-frozen ordinary goods only. Fees include 10% consumption tax; use packaged unit weight and applicable side/sum limits.'});
+  const minorUnitScale = 10 ** (market.currencyExponent ?? 2);
   const baseCents = selected.rate.cents;
   const discountCents = market.lowPriceDiscount && request.price.amount < market.lowPriceDiscount.below
     ? Math.min(baseCents, market.lowPriceDiscount.cents) : 0;
@@ -144,15 +151,15 @@ export function calculateFbaFee(input) {
       shippingWeight: display(selected.classification.shippingWeight),
       rawWeight: display(selected.classification.rawWeight),
       dimensionalWeight: display(selected.classification.dimensionalWeight),
-      plan: selected.plan, priceBandIndex: selected.column,
+      plan: market.priceBandPlans?.[selected.column] ?? selected.plan, priceBandIndex: selected.column,
       incrementalSteps: selected.rate.incrementalSteps },
     assumptions: { lowPriceEligibility: request.options.lowPriceEligibility,
       centralEuropeProgram: request.marketplace === 'DE' ? request.options.centralEuropeProgram : null,
       includesOnly: 'domestic_fba_fulfillment_and_applicable_fuel_surcharge',
       excludes: ['referral','storage','inbound','returns','removal','SIPP','inventory_surcharges','additional_tax'] },
-    fee: { base: baseCents/100, lowPriceDiscount: discountCents/100, subtotal: subtotalCents/100,
-      fuelSurcharge: fuelCents/100, fuelRate: fuelBasisPoints/10000,
-      total: (subtotalCents+fuelCents)/100, totalMinorUnits: subtotalCents+fuelCents,
+    fee: { base: baseCents/minorUnitScale, lowPriceDiscount: discountCents/minorUnitScale, subtotal: subtotalCents/minorUnitScale,
+      fuelSurcharge: fuelCents/minorUnitScale, fuelRate: fuelBasisPoints/10000,
+      total: (subtotalCents+fuelCents)/minorUnitScale, totalMinorUnits: subtotalCents+fuelCents,
       includesTax: market.feeIncludesTax },
   };
 }

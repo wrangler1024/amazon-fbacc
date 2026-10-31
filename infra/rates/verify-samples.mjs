@@ -6,13 +6,13 @@ const [release,samplePath]=process.argv.slice(2);
 const {calculateFbaFee}=await import(pathToFileURL(resolve(release,'src/index.mjs')));
 const document=JSON.parse(readFileSync(samplePath,'utf8'));
 assert.equal(document.schemaVersion,1);
-assert.ok(document.samples.length>=14);
+assert.ok(document.samples.length>=17);
 const results=[];
 for(const sample of document.samples){
   assert.ok(sample.id && sample.reference?.url && sample.reference?.description);
   const url=new URL(sample.reference.url);
   assert.equal(url.protocol,'https:');
-  assert.match(url.hostname,/(?:^|\.)(?:amazon\.(?:com(?:\.au|\.mx)?|ca|co\.uk)|media-amazon\.com)$/);
+  assert.match(url.hostname,/(?:^|\.)(?:amazon\.(?:com(?:\.au|\.mx)?|ca|co\.uk|ae|sa|co\.jp)|media-amazon\.com)$/);
   assert.ok(['official_table','official_worked_example','official_calculator'].includes(sample.reference.kind));
   const actual=calculateFbaFee(sample.request);
   assert.equal(actual.status,sample.expected.status,sample.id);

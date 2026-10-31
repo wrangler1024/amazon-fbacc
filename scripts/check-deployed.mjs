@@ -13,7 +13,7 @@ async function fetchPath(path,init={}){
 }
 for(const path of ['/healthz','/readyz']){
   const response=await fetchPath(path);assert.equal(response.status,200);
-  const data=await response.json();assert.equal(data.version,VERSION);assert.equal(data.rateVersion,RATE_VERSION);assert.equal(data.marketplaces,14);
+  const data=await response.json();assert.equal(data.version,VERSION);assert.equal(data.rateVersion,RATE_VERSION);assert.equal(data.marketplaces,17);
   evidence.checks.push({path,status:response.status,data});
 }
 for(const [path,file] of [['/','index.html'],['/assets/app.js','app.js'],['/assets/model.mjs','model.mjs'],['/assets/app.css','app.css'],['/assets/logo.svg','logo.svg']]){
@@ -32,7 +32,7 @@ evidence.checks.push({path:'/openapi.json',status:specResponse.status,server:spe
 const values={length:30,width:20,height:5,dimensionUnit:'cm',weight:200,weightUnit:'g',saleDate:'2026-10-31',lowPriceEligibility:'conservative',cep:false};
 const items=MARKETS.map(([code])=>makeRequest(values,code,EXAMPLE_PRICES[code]));
 const batch=await fetchPath('/v1/fba/calculate-batch',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({items})});
-assert.equal(batch.status,200);const result=await batch.json();assert.equal(result.results.length,14);
+assert.equal(batch.status,200);const result=await batch.json();assert.equal(result.results.length,17);
 result.results.forEach((item,i)=>{assert.equal(item.ok,true);assert.deepEqual(item.result,calculateFbaFee(items[i]));});
 evidence.checks.push({path:'/v1/fba/calculate-batch',status:batch.status,marketplaces:result.results.map(x=>({marketplace:x.result.marketplace,currency:x.result.currency,fee:x.result.fee.total})),requestId:batch.headers.get('x-request-id')});
 const ca=items.find(x=>x.marketplace==='CA');
@@ -47,4 +47,4 @@ evidence.checks.push({path:'HTTP redirect',status:301,location:redirect.headers.
 evidence.status='passed';
 const output=process.argv[3]??new URL('../evidence/public-checks.json',import.meta.url).pathname;
 mkdirSync(dirname(output),{recursive:true});writeFileSync(output,JSON.stringify(evidence,null,2)+'\n');
-console.log(JSON.stringify({url:base.origin,status:'passed',marketplaces:14,assetsVerified:5,canadaExample:7.29}));
+console.log(JSON.stringify({url:base.origin,status:'passed',marketplaces:17,assetsVerified:5,canadaExample:7.29}));

@@ -1,6 +1,7 @@
-export type Marketplace = 'AU' | 'US' | 'CA' | 'MX' | 'UK' | 'DE' | 'FR' | 'IT' | 'ES' | 'NL' | 'SE' | 'PL' | 'BE' | 'IE';
+export type Marketplace = 'AU' | 'US' | 'CA' | 'MX' | 'UK' | 'DE' | 'FR' | 'IT' | 'ES' | 'NL' | 'SE' | 'PL' | 'BE' | 'IE' | 'AE' | 'SA' | 'JP';
 export interface CalculationRequest {
   marketplace: Marketplace | 'GB' | (string & {});
+  /** Amount is in native currency; JP requires whole yen. */
   price: { amount: number; currency: string };
   package: {
     dimensions: { length: number; width: number; height: number; unit: 'cm' | 'in' };
@@ -38,11 +39,11 @@ export interface QuoteRequiredResult extends ResultBase {
 }
 export type CalculationResult = EstimatedResult | QuoteRequiredResult;
 export interface MarketplaceInfo {
-  marketplace: Marketplace; currency: string; version: string; verifiedAt: string; effectiveFrom: string;
+  marketplace: Marketplace; currency: string; currencyExponent: number; version: string; verifiedAt: string; effectiveFrom: string;
   program: 'domestic'; category: 'general'; feeIncludesTax: boolean; notes: string[]; sources: Source[];
   lowPrice: { maximum?: number; extendedMaximum?: number; inclusive?: boolean; below?: number; cents?: number } | null;
   tiers: Array<{ id: string; maxDimensions: Array<number | null> | null; dimensionUnit: 'cm' | 'in';
-    maxUnitWeight: number | null; maxShippingWeight: number | null; maxDimensionalWeight: number | null;
+    maxDimensionSum: number | null; maxLongestSide: number | null; maxUnitWeight: number | null; maxShippingWeight: number | null; maxDimensionalWeight: number | null;
     weightUnit: 'kg' | 'lb'; requiresQuote: string | null }>;
 }
 export class InputError extends Error { code: 'INVALID_INPUT'; path: string; constructor(message: string, path?: string) }

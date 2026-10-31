@@ -66,11 +66,11 @@ test("ETags revalidate static assets and HEAD never sends the content", async (t
   assert.equal((await fetch(url + "/", { method: "POST" })).status, 405);
 });
 
-test("readiness covers all 14 adapters and draining rejects new calculations", async (t) => {
+test("readiness covers all 17 adapters and draining rejects new calculations", async (t) => {
   const { url, server } = await start(t);
   const ready = await fetch(url + "/readyz");
   assert.equal(ready.status, 200);
-  assert.equal((await ready.json()).marketplaces, 14);
+  assert.equal((await ready.json()).marketplaces, 17);
   server.startDrain();
   assert.equal((await fetch(url + "/readyz")).status, 503);
   const calc = await fetch(url + "/v1/fba/calculate", {
@@ -102,7 +102,7 @@ test("request IDs are unique; structured logs omit bodies, query strings and aut
     first.headers.get("x-request-id"),
     second.headers.get("x-request-id"),
   );
-  assert.equal(second.headers.get("x-fba-rate-version"), "2026-10-31.1");
+  assert.equal(second.headers.get("x-fba-rate-version"), "2026-10-31.2");
   assert.equal(logs.length, 2);
   assert.equal(logs[0].route, "unknown");
   assert.doesNotMatch(JSON.stringify(logs), /PRIVATE_|secret|authorization/);
