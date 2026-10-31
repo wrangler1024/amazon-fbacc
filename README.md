@@ -1,4 +1,4 @@
-# FBA Fee Calculator
+# Amazon FBACC
 
 独立的亚马逊 FBA 单件配送费计算服务，输入自定义包装、站点、本币售价和预计售出日期，无需 ASIN 或已上架 SKU。提供 JavaScript 函数、TypeScript 类型及 HTTP JSON 接口。
 

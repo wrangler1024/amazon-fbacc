@@ -1,6 +1,6 @@
 # Project context
 
-fbacc is a standalone FBA fee calculator and official-source monitoring toolkit.
+amazon-fbacc is a standalone FBA fee calculator and official-source monitoring toolkit.
 The application is0.2.0, monitoring infra is0.1.0, and the bundled reviewed rate
 snapshot is2026-10-31.1. It supports14 domestic ordinary-goods marketplaces.
 
