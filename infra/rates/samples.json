@@ -1,0 +1,552 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-31",
+  "samples": [
+    {
+      "id": "AU-50g-reference",
+      "request": {
+        "marketplace": "AU",
+        "price": {
+          "amount": 25,
+          "currency": "AUD"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 455
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://sellercentral.amazon.com.au/help/hub/reference/external/G4UU2ZQNHJNKAG5Y",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "UK-50g-reference",
+      "request": {
+        "marketplace": "UK",
+        "price": {
+          "amount": 25,
+          "currency": "GBP"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 192
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "CA-50g-reference",
+      "request": {
+        "marketplace": "CA",
+        "price": {
+          "amount": 25,
+          "currency": "CAD"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 490
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://sellercentral.amazon.ca/help/hub/reference/external/GABBX6GZPA8MSZGW",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "US-50g-reference",
+      "request": {
+        "marketplace": "US",
+        "price": {
+          "amount": 25,
+          "currency": "USD"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 363
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://sellercentral.amazon.com/help/hub/reference/external/GABBX6GZPA8MSZGW",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "MX-50g-reference",
+      "request": {
+        "marketplace": "MX",
+        "price": {
+          "amount": 25,
+          "currency": "MXN"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 2700
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://sellercentral.amazon.com.mx/help/hub/reference/external/G200209150?mons_sel_locale=es_MX",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "DE-50g-reference",
+      "request": {
+        "marketplace": "DE",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 243
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "FR-50g-reference",
+      "request": {
+        "marketplace": "FR",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 282
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "IT-50g-reference",
+      "request": {
+        "marketplace": "IT",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 333
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "ES-50g-reference",
+      "request": {
+        "marketplace": "ES",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 291
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "NL-50g-reference",
+      "request": {
+        "marketplace": "NL",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 239
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "SE-50g-reference",
+      "request": {
+        "marketplace": "SE",
+        "price": {
+          "amount": 250,
+          "currency": "SEK"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 3421
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "PL-50g-reference",
+      "request": {
+        "marketplace": "PL",
+        "price": {
+          "amount": 250,
+          "currency": "PLN"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 311
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "BE-50g-reference",
+      "request": {
+        "marketplace": "BE",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 234
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "IE-50g-reference",
+      "request": {
+        "marketplace": "IE",
+        "price": {
+          "amount": 25,
+          "currency": "EUR"
+        },
+        "package": {
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 1,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 50,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 64
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://m.media-amazon.com/images/G/02/sell/images/260630-FBA-Rate-Card-EN1.pdf",
+        "description": "Independent table-based expected amount reviewed for the 2026-10-31 snapshot; includes published applicable peak/fuel rules."
+      },
+      "boundary": false
+    },
+    {
+      "id": "CA-price-13.99",
+      "request": {
+        "marketplace": "CA",
+        "price": {
+          "amount": 13.99,
+          "currency": "CAD"
+        },
+        "package": {
+          "dimensions": {
+            "length": 30,
+            "width": 20,
+            "height": 5,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 200,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 729,
+        "tier": "standard"
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://sellercentral.amazon.ca/help/hub/reference/external/GABBX6GZPA8MSZGW",
+        "description": "Independent 0.6 kg peak calculation with CAD 14 low-price threshold and subsequent 3.5 percent fuel surcharge."
+      },
+      "boundary": true
+    },
+    {
+      "id": "CA-price-14",
+      "request": {
+        "marketplace": "CA",
+        "price": {
+          "amount": 14,
+          "currency": "CAD"
+        },
+        "package": {
+          "dimensions": {
+            "length": 30,
+            "width": 20,
+            "height": 5,
+            "unit": "cm"
+          },
+          "weight": {
+            "value": 200,
+            "unit": "g"
+          }
+        },
+        "saleDate": "2026-10-31",
+        "category": "general"
+      },
+      "expected": {
+        "status": "estimated",
+        "totalMinorUnits": 811,
+        "tier": "standard"
+      },
+      "reference": {
+        "kind": "official_table",
+        "url": "https://sellercentral.amazon.ca/help/hub/reference/external/GABBX6GZPA8MSZGW",
+        "description": "Independent 0.6 kg peak calculation with CAD 14 low-price threshold and subsequent 3.5 percent fuel surcharge."
+      },
+      "boundary": true
+    }
+  ]
+}
