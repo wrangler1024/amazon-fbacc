@@ -17,7 +17,9 @@ for(const path of ['/healthz','/readyz']){
   evidence.checks.push({path,status:response.status,data});
 }
 for(const [path,file] of [['/','index.html'],['/assets/app.js','app.js'],['/assets/model.mjs','model.mjs'],['/assets/app.css','app.css'],['/assets/logo.svg','logo.svg']]){
-  const response=await fetchPath(path);assert.equal(response.status,200);
+  // Match the versioned URLs used by the page, avoiding an older cached asset.
+  const assetPath=path.startsWith('/assets/') ? `${path}?v=${VERSION}` : path;
+  const response=await fetchPath(assetPath);assert.equal(response.status,200);
   const bytes=Buffer.from(await response.arrayBuffer());
   const remote=createHash('sha256').update(bytes).digest('hex');
   const local=createHash('sha256').update(readFileSync(new URL('../public/'+file,import.meta.url))).digest('hex');
