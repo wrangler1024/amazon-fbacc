@@ -2,7 +2,7 @@ import book from '../rates/2026-10-31.json' with { type: 'json' };
 import { InputError, validateRequest } from './validation.mjs';
 
 export { InputError };
-export const VERSION = '0.2.0';
+export const VERSION = '0.2.1';
 export const RATE_VERSION = book.version;
 const EPSILON = 1e-9;
 const within = (value, maximum) => maximum == null || value <= maximum + EPSILON;

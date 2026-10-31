@@ -70,3 +70,40 @@ test("CSV retains currencies and uses an empty fee for quote_required, never a z
   assert.match(csv, /需报价/);
   assert.match(quoteMessage("OFFICIAL_SOURCE_CONFLICT"), /不一致/);
 });
+
+test("eligibility UI exposes only supported choices and uses the API's price thresholds", async () => {
+  const {lowPriceChoices,lowPricePresentation}=await import('../public/model.mjs');
+  const {getMarketplaces}=await import('../src/index.mjs');
+  for(const metadata of getMarketplaces()) {
+    const code=metadata.marketplace;
+    const view=lowPricePresentation(code,metadata);
+    if(['US','CA','MX'].includes(code)) {
+      assert.equal(view,null);
+      assert.deepEqual(lowPriceChoices(code),[]);
+    } else {
+      assert.ok(view.hint.includes(`${metadata.currency} ${metadata.lowPrice.maximum}`));
+      assert.equal(view.labels.length,code==='AU'?2:3);
+      assert.equal(view.labels.some(([value])=>value==='confirmed_eligible'),code!=='AU');
+    }
+  }
+});
+
+test("hidden eligibility choices never affect US/CA/MX and AU cannot use an extended option", () => {
+  for(const code of ['US','CA','MX']) {
+    const request=makeRequest({...values,lowPriceEligibility:'ineligible'},code,EXAMPLE_PRICES[code]);
+    assert.equal(Object.hasOwn(request.options,'lowPriceEligibility'),false);
+    assert.deepEqual(calculateFbaFee(request).fee,calculateFbaFee(makeRequest(values,code,EXAMPLE_PRICES[code])).fee);
+  }
+  const au=makeRequest({...values,lowPriceEligibility:'confirmed_eligible'},'AU',12.99);
+  assert.equal(au.options.lowPriceEligibility,'conservative');
+});
+
+test("batch eligibility is independent per site, including when a selection is absent", () => {
+  const input={...values,length:20,width:15,height:1,weight:50,
+    lowPriceByMarketplace:{UK:'confirmed_eligible',DE:'ineligible',AU:'conservative'}};
+  assert.equal(calculateFbaFee(makeRequest(input,'UK',15)).fee.total,1.54);
+  assert.equal(calculateFbaFee(makeRequest(input,'AU',12.99)).classification.plan,'low_price');
+  assert.notEqual(calculateFbaFee(makeRequest(input,'DE',10)).classification.plan,'low_price');
+  assert.equal(makeRequest(input,'FR',15).options.lowPriceEligibility,'conservative');
+  assert.equal(makeRequest({...input,lowPriceByMarketplace:{UK:'ineligible'}},'AU',12.99).options.lowPriceEligibility,'conservative');
+});

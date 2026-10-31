@@ -54,8 +54,45 @@ export function convertUnit(value, from, to) {
     Number(((number * FACTORS[from]) / FACTORS[to]).toPrecision(15)),
   );
 }
+const EXTENDED_LOW_PRICE_MARKETS = new Set([
+  "UK", "DE", "FR", "IT", "ES", "NL", "SE", "PL", "BE", "IE",
+]);
+export function lowPriceChoices(marketplace) {
+  if (EXTENDED_LOW_PRICE_MARKETS.has(marketplace))
+    return ["conservative", "confirmed_eligible", "ineligible"];
+  return marketplace === "AU" ? ["conservative", "ineligible"] : [];
+}
+export function lowPricePresentation(marketplace, metadata) {
+  const choices = lowPriceChoices(marketplace);
+  const low = metadata?.lowPrice;
+  if (!choices.length || !Number.isFinite(low?.maximum)) return null;
+  const cap = `${low.inclusive ? "≤" : "<"}${metadata.currency} ${low.maximum}`;
+  if (marketplace === "AU") return {
+    labels: [
+      ["conservative", `按售价自动判断（${cap}）`],
+      ["ineligible", "不使用低价费率"],
+    ],
+    hint: `澳大利亚没有扩展低价档。普通商品售价${cap}且包装符合条件时使用低价费率，否则使用常规费率。`,
+  };
+  const extended = `${low.inclusive ? "≤" : "<"}${metadata.currency} ${low.extendedMaximum}`;
+  return {
+    labels: [
+      ["conservative", `未确认扩展资格（${cap}）`],
+      ["confirmed_eligible", `已确认扩展资格（${extended}）`],
+      ["ineligible", "不使用低价优惠（按常规或旺季费率）"],
+    ],
+    hint: `${MARKET_NAMES[marketplace]}：未确认时按售价${cap}判断；只有已核实官方费用类目符合扩展优惠，才选择${extended}。包装仍须满足低价档尺寸、重量要求，不符合时回到常规或旺季费率。此选择仅用于预估，不会申请或核实官方资格。`,
+  };
+}
 export function makeRequest(values, marketplace, price) {
-  const options = { lowPriceEligibility: values.lowPriceEligibility };
+  const options = {};
+  const choices = lowPriceChoices(marketplace);
+  if (choices.length) {
+    const selected = values.lowPriceByMarketplace
+      ? values.lowPriceByMarketplace[marketplace]
+      : values.lowPriceEligibility;
+    options.lowPriceEligibility = choices.includes(selected) ? selected : "conservative";
+  }
   if (marketplace === "DE") options.centralEuropeProgram = values.cep;
   return {
     marketplace,

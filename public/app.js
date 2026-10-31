@@ -5,6 +5,7 @@ import {
   EXAMPLE_PRICES,
   convertUnit,
   makeRequest,
+  lowPricePresentation,
   formatMoney,
   formatWeight,
   tierLabel,
@@ -13,7 +14,7 @@ import {
   noticeText,
   resultText,
   comparisonCsv,
-} from "./model.mjs?v=0.2.0";
+} from "./model.mjs?v=0.2.1";
 
 const $ = (id) => document.getElementById(id);
 let mode = "single",
@@ -25,6 +26,8 @@ let mode = "single",
   toastTimer,
   hasInitialized = false;
 const comparisonFields = new Map();
+const marketMetadata = new Map();
+const lowPriceSelections = new Map();
 const text = (id, value) => {
   $(id).textContent = value;
 };
@@ -46,7 +49,7 @@ function values() {
     weight: $("weight").value,
     weightUnit: $("weight-unit").value,
     saleDate: $("sale-date").value,
-    lowPriceEligibility: $("low-price-eligibility").value,
+    lowPriceByMarketplace: Object.fromEntries(lowPriceSelections),
     cep: $("cep").checked,
   };
 }
@@ -71,13 +74,44 @@ function invalidate() {
     mode === "compare" ? "对比所选站点费用" : "计算 FBA 配送费",
   );
 }
+function lowPriceField(code, id) {
+  const presentation = lowPricePresentation(code, marketMetadata.get(code));
+  if (!presentation) return null;
+  const group = document.createElement("div"), label = document.createElement("label"),
+    select = document.createElement("select"), hint = document.createElement("p");
+  label.className = "field";
+  label.textContent = `${MARKET_NAMES[code]}低价费率选择`;
+  select.id = id;
+  select.setAttribute("aria-describedby", `${id}-hint`);
+  for (const [value, title] of presentation.labels) {
+    const option = document.createElement("option");
+    option.value = value; option.textContent = title; select.append(option);
+  }
+  select.value = lowPriceSelections.get(code) ?? "conservative";
+  select.addEventListener("change", () => {
+    lowPriceSelections.set(code, select.value);
+    invalidate();
+  });
+  hint.id = `${id}-hint`; hint.className = "field-hint";
+  hint.textContent = presentation.hint;
+  label.append(select); group.append(label, hint);
+  return group;
+}
 function relevantOptions() {
-  const hasGermany =
-    mode === "compare"
-      ? comparisonFields.get("DE")?.check.checked
-      : $("marketplace").value === "DE";
+  const selected = mode === "compare"
+    ? [...comparisonFields].filter(([, fields]) => fields.check.checked).map(([code]) => code)
+    : [$("marketplace").value];
+  const hasGermany = selected.includes("DE");
   show("cep-field", hasGermany);
   show("cep-hint", hasGermany);
+  const container = $("low-price-fields");
+  container.replaceChildren();
+  for (const code of selected) {
+    const field = lowPriceField(code, mode === "compare" ? `low-price-${code}` : "low-price-eligibility");
+    if (field) container.append(field);
+  }
+  show("low-price-compare-note", mode === "compare" && container.children.length > 0);
+  show("options-card", container.children.length > 0 || hasGermany);
 }
 function switchView(view) {
   mode = view;
@@ -134,11 +168,14 @@ function fillExample() {
   $("price").value = EXAMPLE_PRICES[$("marketplace").value];
   for (const [code, { price }] of comparisonFields)
     price.value = EXAMPLE_PRICES[code];
-  $("low-price-eligibility").value = "conservative";
+  lowPriceSelections.clear();
+  relevantOptions();
   $("cep").checked = false;
   show("example-note", true);
 }
 function initializeMarkets(available) {
+  marketMetadata.clear();
+  for (const item of available) marketMetadata.set(item.marketplace, item);
   const supported = new Set(available.map((m) => m.marketplace));
   $("marketplace").replaceChildren();
   $("market-price-grid").replaceChildren();

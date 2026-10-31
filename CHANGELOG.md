@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 — 2026-10-31
+
+- Hide irrelevant low-price controls on US/CA/MX; limit AU to automatic/no-discount choices.
+- Explain UK/EU price thresholds using API marketplace metadata.
+- Keep comparison eligibility independent for each marketplace.
+- Preserve the v1 API contract and reviewed rate snapshot; 52 application tests pass.
+
 ## 0.2.0 — 2026-10-31
 
 - Initial standalone open-source release of the completed calculator and infra.

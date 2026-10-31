@@ -10,8 +10,8 @@
     />
     <title>FBA 费用计算器 · Samforo</title>
     <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/assets/app.css?v=0.2.0" />
-    <script type="module" src="/assets/app.js?v=0.2.0"></script>
+    <link rel="stylesheet" href="/assets/app.css?v=0.2.1" />
+    <script type="module" src="/assets/app.js?v=0.2.1"></script>
   </head>
   <body>
     <svg class="icon-definitions" aria-hidden="true">
@@ -312,24 +312,14 @@
                 <p class="submission-note">
                   只计算费用，不创建或修改任何 SKU。
                 </p>
-                <section class="card options-card">
+                <section id="options-card" class="card options-card" hidden>
                   <details id="options-details">
                     <summary>计费选项<span>低价资格与站点计划</span></summary>
                     <div class="options-content">
-                      <label class="field"
-                        >低价优惠资格<select id="low-price-eligibility">
-                          <option value="conservative">
-                            未确认官方类目，使用保守门槛
-                          </option>
-                          <option value="confirmed_eligible">
-                            已确认符合扩展低价优惠资格
-                          </option>
-                          <option value="ineligible">不使用低价优惠</option>
-                        </select></label
-                      >
-                      <p class="field-hint">
-                        英国及欧洲的优惠门槛因官方费用类目而异，未确认时使用较低门槛。
+                      <p id="low-price-compare-note" class="field-hint" hidden>
+                        各站资格单独选择；仅对所选站点生效。美国、加拿大和墨西哥按售价规则自动计算，无需选择资格。
                       </p>
+                      <div id="low-price-fields"></div>
                       <label id="cep-field" class="check-field" hidden
                         ><input
                           id="cep"

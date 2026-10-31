@@ -1574,3 +1574,6 @@ pre {
     padding: 16px 22px;
   }
 }
+
+#low-price-fields { display: grid; gap: 20px; min-width: 0; }
+#low-price-fields select { width: 100%; min-width: 0; }
